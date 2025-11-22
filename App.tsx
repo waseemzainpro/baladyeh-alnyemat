@@ -22,6 +22,9 @@ import {
   FutureProjectsSlide,
   SupportSlide,
   GuaranteeSlide,
+  SecuritySlide,
+  CustomDevelopmentSlide,
+  TechnicalArchitectureSlide,
   CTASlide
 } from './components/Slides';
 
@@ -45,7 +48,10 @@ const App: React.FC = () => {
     { id: 12, component: RoadmapSlide, title: "العائد الاستثماري" },
     { id: 13, component: SupportSlide, title: "الدعم والشراكة" },
     { id: 14, component: GuaranteeSlide, title: "الضمانات" },
-    { id: 15, component: CTASlide, title: "الخطوات التالية" },
+    { id: 15, component: SecuritySlide, title: "الأمان والخصوصية" },
+    { id: 16, component: CustomDevelopmentSlide, title: "التطوير المخصص" },
+    { id: 17, component: TechnicalArchitectureSlide, title: "البنية التقنية" },
+    { id: 18, component: CTASlide, title: "الخطوات التالية" },
   ];
 
   const nextSlide = useCallback(() => {

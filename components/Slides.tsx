@@ -24,7 +24,14 @@ import {
   MapPin,
   LayoutGrid,
   Globe,
-  Server
+  Server,
+  Lock,
+  Shield,
+  Key,
+  HardDrive,
+  CloudOff,
+  CheckCircle,
+  AlertTriangle
 } from 'lucide-react';
 import { 
   BarChart, 
@@ -898,7 +905,366 @@ export const GuaranteeSlide: React.FC<SlideProps> = () => {
     );
 };
 
-// --- Slide 16: CTA ---
+// --- Slide 16: Security & Privacy (New) ---
+
+export const SecuritySlide: React.FC<SlideProps> = () => {
+    return (
+        <SlideContainer>
+            <SectionTitle subtitle="ملكية كاملة وأمان مطلق">نظام مستقل 100%: بياناتك ملكك</SectionTitle>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <motion.div
+                    initial={{ x: -50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    className="bg-gradient-to-br from-emerald-50 to-emerald-100 p-6 rounded-xl border-2 border-emerald-300"
+                >
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center">
+                            <Shield className="text-white" size={24} />
+                        </div>
+                        <h3 className="text-xl font-bold text-emerald-900">استضافة خاصة على سيرفرك</h3>
+                    </div>
+                    <ul className="space-y-3 text-slate-700">
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-emerald-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>السيرفر ملكك:</strong> نقوم بتثبيت النظام على سيرفر خاص بالبلدية (محلي أو سحابي)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-emerald-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>لا اشتراكات سحابية:</strong> لا يوجد اعتماد على خوادم خارجية أو شركات أجنبية</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-emerald-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>تحكم كامل:</strong> أنتم من يتحكم بالتشغيل، الإيقاف، والوصول</span>
+                        </li>
+                    </ul>
+                </motion.div>
+
+                <motion.div
+                    initial={{ x: 50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-2 border-blue-300"
+                >
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                            <Database className="text-white" size={24} />
+                        </div>
+                        <h3 className="text-xl font-bold text-blue-900">قاعدة البيانات الخاصة</h3>
+                    </div>
+                    <ul className="space-y-3 text-slate-700">
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>حسابات خاصة:</strong> قاعدة البيانات على حساب البلدية فقط</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>تشفير متقدم:</strong> جميع البيانات مشفرة بمعايير AES-256</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>نسخ احتياطية يومية:</strong> تلقائية ومخزنة محلياً أو في مكان آمن تختارونه</span>
+                        </li>
+                    </ul>
+                </motion.div>
+
+                <motion.div
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl border-2 border-purple-300"
+                >
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
+                            <CloudOff className="text-white" size={24} />
+                        </div>
+                        <h3 className="text-xl font-bold text-purple-900">صفر تسريب للخارج</h3>
+                    </div>
+                    <ul className="space-y-3 text-slate-700">
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-purple-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>لا خدمات خارجية:</strong> لا يتم إرسال أي بيانات لشركات أخرى</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-purple-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>شبكة داخلية:</strong> يمكن تشغيل النظام بدون اتصال بالإنترنت (Offline Mode)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-purple-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>امتثال كامل:</strong> متوافق مع قوانين حماية البيانات الفلسطينية</span>
+                        </li>
+                    </ul>
+                </motion.div>
+
+                <motion.div
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                    className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl border-2 border-orange-300"
+                >
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center">
+                            <Key className="text-white" size={24} />
+                        </div>
+                        <h3 className="text-xl font-bold text-orange-900">صلاحيات محكمة</h3>
+                    </div>
+                    <ul className="space-y-3 text-slate-700">
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-orange-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>تحكم بالوصول:</strong> كل موظف له صلاحيات محددة حسب دوره</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-orange-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>سجل كامل:</strong> تتبع جميع العمليات (من، متى، ماذا)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                            <CheckCircle size={20} className="text-orange-600 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm"><strong>مصادقة قوية:</strong> تسجيل دخول متعدد العوامل (2FA)</span>
+                        </li>
+                    </ul>
+                </motion.div>
+            </div>
+
+            <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="mt-8 bg-slate-800 text-white p-6 rounded-2xl text-center"
+            >
+                <h3 className="text-2xl font-bold mb-3">🔒 الخلاصة: سيادة رقمية كاملة</h3>
+                <p className="text-slate-300 text-lg">
+                    نحن لا نبيع "اشتراكاً"، بل نبني لكم نظاماً <strong className="text-emerald-400">تملكونه بالكامل</strong>، 
+                    ويعمل على بنيتكم التحتية الخاصة، بدون أي تبعية خارجية.
+                </p>
+            </motion.div>
+        </SlideContainer>
+    );
+};
+
+// --- Slide 17: Custom Development (New) ---
+
+export const CustomDevelopmentSlide: React.FC<SlideProps> = () => {
+    const features = [
+        {
+            title: "مبني خصيصاً لكم",
+            icon: LayoutGrid,
+            color: "emerald",
+            points: [
+                "تحليل شامل لاحتياجاتكم الفعلية",
+                "تصميم واجهات مخصصة تناسب عملكم",
+                "تكامل مع أنظمتكم الحالية (إن وجدت)",
+                "لا توجد ميزات زائدة أو غير ضرورية"
+            ]
+        },
+        {
+            title: "كود المصدر ملككم",
+            icon: Server,
+            color: "blue",
+            points: [
+                "تحصلون على الكود الكامل (Source Code)",
+                "حرية التعديل والتطوير مستقبلاً",
+                "لا قيود على الاستخدام أو التوسع",
+                "يمكن توظيف مطورين للصيانة لاحقاً"
+            ]
+        },
+        {
+            title: "بنية تحتية مرنة",
+            icon: HardDrive,
+            color: "purple",
+            points: [
+                "نثبت على أي سيرفر تختارونه (Windows/Linux)",
+                "يعمل محلياً (On-Premise) أو سحابياً حسب رغبتكم",
+                "قابل للتوسع: يدعم من 10 مستخدمين إلى 10,000+",
+                "استهلاك موارد معقول (يعمل على سيرفرات متوسطة)"
+            ]
+        },
+        {
+            title: "لا vendor lock-in",
+            icon: Lock,
+            color: "red",
+            points: [
+                "لن تكونوا محتجزين عند شركة واحدة",
+                "يمكن تصدير جميع البيانات بسهولة",
+                "معايير مفتوحة (PostgreSQL, REST APIs)",
+                "حرية اختيار مزود استضافة آخر متى شئتم"
+            ]
+        }
+    ];
+
+    const colorMap: Record<string, { bg: string; border: string; icon: string; text: string }> = {
+        emerald: { bg: "bg-emerald-50", border: "border-emerald-300", icon: "text-emerald-600", text: "text-emerald-900" },
+        blue: { bg: "bg-blue-50", border: "border-blue-300", icon: "text-blue-600", text: "text-blue-900" },
+        purple: { bg: "bg-purple-50", border: "border-purple-300", icon: "text-purple-600", text: "text-purple-900" },
+        red: { bg: "bg-red-50", border: "border-red-300", icon: "text-red-600", text: "text-red-900" }
+    };
+
+    return (
+        <SlideContainer>
+            <SectionTitle subtitle="لا أنظمة جاهزة، بل حل مصنوع لكم">تطوير مخصص 100%</SectionTitle>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                {features.map((feature, idx) => {
+                    const colors = colorMap[feature.color];
+                    return (
+                        <motion.div
+                            key={idx}
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: idx * 0.15 }}
+                            className={`${colors.bg} p-5 rounded-xl border-2 ${colors.border}`}
+                        >
+                            <div className="flex items-center gap-3 mb-4">
+                                <feature.icon className={colors.icon} size={28} />
+                                <h3 className={`text-lg font-bold ${colors.text}`}>{feature.title}</h3>
+                            </div>
+                            <ul className="space-y-2">
+                                {feature.points.map((point, i) => (
+                                    <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                                        <CheckCircle2 size={16} className={`${colors.icon} mt-0.5 flex-shrink-0`} />
+                                        <span>{point}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
+                    );
+                })}
+            </div>
+
+            <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="mt-8 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white p-6 rounded-2xl shadow-xl"
+            >
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h3 className="text-2xl font-bold mb-2">نظام يكبر معكم</h3>
+                        <p className="text-emerald-100">
+                            من نظام بسيط لبلدية صغيرة إلى منصة رقمية متكاملة للمدن الذكية، كل شيء قابل للتطوير.
+                        </p>
+                    </div>
+                    <Server size={64} className="text-emerald-200 opacity-50" />
+                </div>
+            </motion.div>
+        </SlideContainer>
+    );
+};
+
+// --- Slide 18: Technical Architecture (New) ---
+
+export const TechnicalArchitectureSlide: React.FC<SlideProps> = () => {
+    return (
+        <SlideContainer>
+            <SectionTitle subtitle="بنية تقنية احترافية">كيف يعمل النظام تحت الغطاء؟</SectionTitle>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                <motion.div
+                    initial={{ y: 30, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    className="bg-white p-5 rounded-xl border-2 border-slate-200 shadow-sm"
+                >
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-3">
+                        <Globe className="text-blue-600" size={24} />
+                    </div>
+                    <h3 className="font-bold text-lg text-slate-800 mb-2">الواجهة الأمامية (Frontend)</h3>
+                    <ul className="text-sm text-slate-600 space-y-1.5">
+                        <li>• <strong>React/Vue.js:</strong> واجهات تفاعلية سريعة</li>
+                        <li>• <strong>Responsive Design:</strong> تعمل على كل الأجهزة</li>
+                        <li>• <strong>PWA Ready:</strong> قابلة للتثبيت كتطبيق</li>
+                        <li>• <strong>Multilingual:</strong> دعم العربية والإنجليزية</li>
+                    </ul>
+                </motion.div>
+
+                <motion.div
+                    initial={{ y: 30, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="bg-white p-5 rounded-xl border-2 border-slate-200 shadow-sm"
+                >
+                    <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-3">
+                        <Server className="text-emerald-600" size={24} />
+                    </div>
+                    <h3 className="font-bold text-lg text-slate-800 mb-2">الخادم (Backend)</h3>
+                    <ul className="text-sm text-slate-600 space-y-1.5">
+                        <li>• <strong>Node.js/Python:</strong> سرعة ومرونة</li>
+                        <li>• <strong>REST APIs:</strong> معايير عالمية للتكامل</li>
+                        <li>• <strong>Microservices:</strong> بنية قابلة للتوسع</li>
+                        <li>• <strong>Load Balancing:</strong> توزيع الأحمال</li>
+                    </ul>
+                </motion.div>
+
+                <motion.div
+                    initial={{ y: 30, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="bg-white p-5 rounded-xl border-2 border-slate-200 shadow-sm"
+                >
+                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-3">
+                        <Database className="text-purple-600" size={24} />
+                    </div>
+                    <h3 className="font-bold text-lg text-slate-800 mb-2">قاعدة البيانات</h3>
+                    <ul className="text-sm text-slate-600 space-y-1.5">
+                        <li>• <strong>PostgreSQL:</strong> قاعدة بيانات قوية ومستقرة</li>
+                        <li>• <strong>Redis Cache:</strong> تسريع الاستجابة</li>
+                        <li>• <strong>Full-Text Search:</strong> بحث متقدم</li>
+                        <li>• <strong>Automated Backups:</strong> نسخ احتياطي تلقائي</li>
+                    </ul>
+                </motion.div>
+            </div>
+
+            <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="mt-8 bg-slate-50 border-2 border-slate-200 rounded-xl p-6"
+            >
+                <h3 className="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
+                    <Shield className="text-emerald-600" size={24} />
+                    طبقات الأمان المتعددة
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="text-center">
+                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <Lock className="text-green-600" size={28} />
+                        </div>
+                        <p className="text-xs font-semibold text-slate-700">تشفير SSL/TLS</p>
+                    </div>
+                    <div className="text-center">
+                        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <Key className="text-blue-600" size={28} />
+                        </div>
+                        <p className="text-xs font-semibold text-slate-700">JWT Tokens</p>
+                    </div>
+                    <div className="text-center">
+                        <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <ShieldAlert className="text-purple-600" size={28} />
+                        </div>
+                        <p className="text-xs font-semibold text-slate-700">Firewall Rules</p>
+                    </div>
+                    <div className="text-center">
+                        <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <AlertTriangle className="text-orange-600" size={28} />
+                        </div>
+                        <p className="text-xs font-semibold text-slate-700">تنبيهات اختراق</p>
+                    </div>
+                </div>
+            </motion.div>
+
+            <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="mt-6 bg-gradient-to-r from-slate-800 to-slate-700 text-white p-5 rounded-xl"
+            >
+                <p className="text-center text-lg">
+                    <strong>النتيجة:</strong> نظام سريع، آمن، وموثوق يعمل 24/7 بدون توقف 🚀
+                </p>
+            </motion.div>
+        </SlideContainer>
+    );
+};
+
+// --- Slide 19: CTA ---
 
 export const CTASlide: React.FC<SlideProps> = () => {
     const [formData, setFormData] = React.useState({
