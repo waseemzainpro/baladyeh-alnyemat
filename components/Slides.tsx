@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { motion } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, PerspectiveCamera, Environment } from '@react-three/drei';
+import {  AnimatedStat, ProgressBar, GlowCard } from './InteractiveElements';
+import { RotatingServer, DataSphere, SecurityShield } from './3DElements';
 import { 
   Building2, 
   FileWarning, 
@@ -66,51 +70,84 @@ const SectionTitle: React.FC<{ children: React.ReactNode; subtitle?: string }> =
 
 export const TitleSlide: React.FC<SlideProps> = () => {
   return (
-    <SlideContainer className="justify-center items-center text-center bg-gradient-to-br from-slate-50 to-slate-100">
-      <motion.div 
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="mb-8"
-      >
-        <div className="flex items-center justify-center gap-4 mb-6">
-             <div className="p-4 bg-white rounded-2xl shadow-sm border border-slate-100">
-                <Building2 size={48} className="text-emerald-600" />
-             </div>
-             <div className="text-right">
-                <h3 className="font-bold text-slate-700 text-lg">بلدية النويعمة</h3>
-                <h3 className="font-bold text-slate-500 text-sm">والديوك الفوقا</h3>
-             </div>
-        </div>
-      </motion.div>
+    <SlideContainer className="justify-center items-center text-center bg-gradient-to-br from-emerald-50 via-slate-50 to-cyan-50 relative overflow-hidden">
+      {/* Animated background pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-500 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
 
-      <motion.h1 
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.4, type: "spring" }}
-        className="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight mb-6 max-w-4xl"
-      >
-        نظام الإدارة الذكي <span className="text-emerald-600">المتكامل</span>
-      </motion.h1>
+      <div className="relative z-10">
+        <motion.div 
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mb-8"
+        >
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <motion.div 
+              className="p-4 bg-white rounded-2xl shadow-lg border border-emerald-100 hover-lift"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <Building2 size={48} className="text-emerald-600" />
+            </motion.div>
+            <div className="text-right">
+              <h3 className="font-bold text-slate-700 text-lg md:text-xl">بلدية النويعمة</h3>
+              <h3 className="font-bold text-slate-500 text-sm md:text-base">والديوك الفوقا</h3>
+            </div>
+          </div>
+        </motion.div>
 
-      <motion.p 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="text-2xl text-slate-600 mb-12"
-      >
-        تحول رقمي شامل نحو إدارة ذكية وفعالة
-      </motion.p>
+        <motion.h1 
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.4, type: "spring" }}
+          className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight mb-6 max-w-4xl px-4"
+        >
+          نظام الإدارة الذكي <span className="gradient-text">المتكامل</span>
+        </motion.h1>
 
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className="flex flex-col items-center gap-2 text-sm text-slate-400"
-      >
-        <p>مقدم من شركة Z7 pro</p>
-        <p>نوفمبر 2025</p>
-      </motion.div>
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="text-lg sm:text-xl md:text-2xl text-slate-600 mb-12 px-4"
+        >
+          تحول رقمي شامل نحو إدارة ذكية وفعالة 🚀
+        </motion.p>
+
+        {/* Quick stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-12 px-4"
+        >
+          <div className="glass-effect rounded-xl p-4 text-center">
+            <div className="text-2xl md:text-3xl font-bold text-emerald-600">95%</div>
+            <div className="text-xs md:text-sm text-slate-600">تقليل الأخطاء</div>
+          </div>
+          <div className="glass-effect rounded-xl p-4 text-center">
+            <div className="text-2xl md:text-3xl font-bold text-blue-600">24/7</div>
+            <div className="text-xs md:text-sm text-slate-600">عمل مستمر</div>
+          </div>
+          <div className="glass-effect rounded-xl p-4 text-center col-span-2 md:col-span-1">
+            <div className="text-2xl md:text-3xl font-bold text-purple-600">$57.5K</div>
+            <div className="text-xs md:text-sm text-slate-600">توفير سنوي</div>
+          </div>
+        </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="flex flex-col items-center gap-2 text-xs md:text-sm text-slate-400"
+        >
+          <p className="font-semibold">مقدم من شركة Z7 pro</p>
+          <p>نوفمبر 2025</p>
+        </motion.div>
+      </div>
     </SlideContainer>
   );
 };
@@ -516,42 +553,65 @@ export const DashboardSlide: React.FC<SlideProps> = () => {
 // --- Slide 8: Benefits ---
 
 export const BenefitsSlide: React.FC<SlideProps> = () => {
-    const benefits = [
-        { val: "95%", text: "تقليل الأخطاء الإدارية والمالية", color: "text-emerald-600", border: "border-emerald-200" },
-        { val: "دقائق", text: "إنجاز المعاملات (بدلاً من أيام)", color: "text-blue-600", border: "border-blue-200" },
-        { val: "80%", text: "زيادة متوقعة في رضا المواطنين", color: "text-purple-600", border: "border-purple-200" },
-        { val: "100%", text: "شفافية ورقابة إدارية كاملة", color: "text-cyan-600", border: "border-cyan-200" },
-    ];
-
     return (
         <SlideContainer>
             <SectionTitle>الفوائد العملية الملموسة من اليوم الأول</SectionTitle>
-            <div className="grid grid-cols-2 gap-6 mt-8">
-                 {/* Central Financial Savings Bubble */}
-                 <motion.div 
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="col-span-2 flex justify-center mb-8"
-                 >
-                    <div className="bg-yellow-50 border-2 border-yellow-400 rounded-full w-64 h-64 flex flex-col items-center justify-center text-center shadow-xl relative z-10">
-                        <h3 className="text-4xl font-extrabold text-slate-800">$57,500</h3>
-                        <p className="text-slate-600 font-medium mt-2">توفير مالي سنوي<br/>مضمون</p>
-                    </div>
-                 </motion.div>
-
-                 {benefits.map((b, i) => (
-                     <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.1 + 0.3 }}
-                        className={`bg-white p-6 rounded-xl shadow-sm border-2 ${b.border} text-center`}
-                     >
-                         <h4 className={`text-4xl font-bold ${b.color} mb-2`}>{b.val}</h4>
-                         <p className="text-slate-600 font-medium">{b.text}</p>
-                     </motion.div>
-                 ))}
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                <AnimatedStat
+                    end={95}
+                    suffix="%"
+                    label="تقليل الأخطاء الإدارية والمالية"
+                    icon={<CheckCircle2 size={32} />}
+                    color="emerald"
+                />
+                
+                <AnimatedStat
+                    end={80}
+                    suffix="%"
+                    label="زيادة متوقعة في رضا المواطنين"
+                    icon={<Users size={32} />}
+                    color="blue"
+                />
+                
+                <AnimatedStat
+                    end={100}
+                    suffix="%"
+                    label="شفافية ورقابة إدارية كاملة"
+                    icon={<Shield size={32} />}
+                    color="purple"
+                />
+                
+                <AnimatedStat
+                    end={57500}
+                    prefix="$"
+                    label="توفير مالي سنوي مضمون"
+                    icon={<TrendingUp size={32} />}
+                    color="orange"
+                />
             </div>
+
+            <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="mt-8 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white rounded-2xl p-6 md:p-8 shadow-2xl"
+            >
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 text-center">⏱️ إنجاز المعاملات في دقائق بدلاً من أيام</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div className="bg-white/20 backdrop-blur rounded-xl p-4">
+                        <div className="text-3xl md:text-4xl font-bold mb-1">قبل</div>
+                        <div className="text-emerald-100">3-5 أيام</div>
+                    </div>
+                    <div className="flex items-center justify-center">
+                        <div className="text-4xl">→</div>
+                    </div>
+                    <div className="bg-white/20 backdrop-blur rounded-xl p-4">
+                        <div className="text-3xl md:text-4xl font-bold mb-1">بعد</div>
+                        <div className="text-emerald-100">5-10 دقائق</div>
+                    </div>
+                </div>
+            </motion.div>
         </SlideContainer>
     );
 };
@@ -912,127 +972,149 @@ export const SecuritySlide: React.FC<SlideProps> = () => {
         <SlideContainer>
             <SectionTitle subtitle="ملكية كاملة وأمان مطلق">نظام مستقل 100%: بياناتك ملكك</SectionTitle>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <motion.div
-                    initial={{ x: -50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    className="bg-gradient-to-br from-emerald-50 to-emerald-100 p-6 rounded-xl border-2 border-emerald-300"
-                >
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center">
-                            <Shield className="text-white" size={24} />
+            {/* 3D Security Visualization */}
+            <div className="h-48 md:h-64 w-full mb-8 rounded-2xl overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800">
+                <Suspense fallback={<div className="flex items-center justify-center h-full text-white">Loading 3D...</div>}>
+                    <Canvas>
+                        <PerspectiveCamera makeDefault position={[0, 0, 5]} />
+                        <ambientLight intensity={0.5} />
+                        <pointLight position={[10, 10, 10]} />
+                        <SecurityShield position={[0, 0, 0]} />
+                        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} />
+                        <Environment preset="city" />
+                    </Canvas>
+                </Suspense>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <GlowCard>
+                    <motion.div
+                        initial={{ x: -50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        className="bg-gradient-to-br from-emerald-50 to-emerald-100 p-4 md:p-6 rounded-xl border-2 border-emerald-300"
+                    >
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <Shield className="text-white" size={20} />
+                            </div>
+                            <h3 className="text-lg md:text-xl font-bold text-emerald-900">استضافة خاصة على سيرفرك</h3>
                         </div>
-                        <h3 className="text-xl font-bold text-emerald-900">استضافة خاصة على سيرفرك</h3>
-                    </div>
-                    <ul className="space-y-3 text-slate-700">
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-emerald-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>السيرفر ملكك:</strong> نقوم بتثبيت النظام على سيرفر خاص بالبلدية (محلي أو سحابي)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-emerald-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>لا اشتراكات سحابية:</strong> لا يوجد اعتماد على خوادم خارجية أو شركات أجنبية</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-emerald-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>تحكم كامل:</strong> أنتم من يتحكم بالتشغيل، الإيقاف، والوصول</span>
-                        </li>
-                    </ul>
-                </motion.div>
+                        <ul className="space-y-2 md:space-y-3 text-slate-700">
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-emerald-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>السيرفر ملكك:</strong> نقوم بتثبيت النظام على سيرفر خاص بالبلدية (محلي أو سحابي)</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-emerald-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>لا اشتراكات سحابية:</strong> لا يوجد اعتماد على خوادم خارجية أو شركات أجنبية</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-emerald-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>تحكم كامل:</strong> أنتم من يتحكم بالتشغيل، الإيقاف، والوصول</span>
+                            </li>
+                        </ul>
+                    </motion.div>
+                </GlowCard>
 
-                <motion.div
-                    initial={{ x: 50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-2 border-blue-300"
-                >
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                            <Database className="text-white" size={24} />
+                <GlowCard>
+                    <motion.div
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 md:p-6 rounded-xl border-2 border-blue-300"
+                    >
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <Database className="text-white" size={20} />
+                            </div>
+                            <h3 className="text-lg md:text-xl font-bold text-blue-900">قاعدة البيانات الخاصة</h3>
                         </div>
-                        <h3 className="text-xl font-bold text-blue-900">قاعدة البيانات الخاصة</h3>
-                    </div>
-                    <ul className="space-y-3 text-slate-700">
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-blue-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>حسابات خاصة:</strong> قاعدة البيانات على حساب البلدية فقط</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-blue-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>تشفير متقدم:</strong> جميع البيانات مشفرة بمعايير AES-256</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-blue-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>نسخ احتياطية يومية:</strong> تلقائية ومخزنة محلياً أو في مكان آمن تختارونه</span>
-                        </li>
-                    </ul>
-                </motion.div>
+                        <ul className="space-y-2 md:space-y-3 text-slate-700">
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>حسابات خاصة:</strong> قاعدة البيانات على حساب البلدية فقط</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>تشفير متقدم:</strong> جميع البيانات مشفرة بمعايير AES-256</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>نسخ احتياطية يومية:</strong> تلقائية ومخزنة محلياً أو في مكان آمن تختارونه</span>
+                            </li>
+                        </ul>
+                    </motion.div>
+                </GlowCard>
 
-                <motion.div
-                    initial={{ y: 50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl border-2 border-purple-300"
-                >
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
-                            <CloudOff className="text-white" size={24} />
+                <GlowCard>
+                    <motion.div
+                        initial={{ y: 50, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                        className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 md:p-6 rounded-xl border-2 border-purple-300"
+                    >
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <CloudOff className="text-white" size={20} />
+                            </div>
+                            <h3 className="text-lg md:text-xl font-bold text-purple-900">صفر تسريب للخارج</h3>
                         </div>
-                        <h3 className="text-xl font-bold text-purple-900">صفر تسريب للخارج</h3>
-                    </div>
-                    <ul className="space-y-3 text-slate-700">
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-purple-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>لا خدمات خارجية:</strong> لا يتم إرسال أي بيانات لشركات أخرى</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-purple-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>شبكة داخلية:</strong> يمكن تشغيل النظام بدون اتصال بالإنترنت (Offline Mode)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-purple-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>امتثال كامل:</strong> متوافق مع قوانين حماية البيانات الفلسطينية</span>
-                        </li>
-                    </ul>
-                </motion.div>
+                        <ul className="space-y-2 md:space-y-3 text-slate-700">
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-purple-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>لا خدمات خارجية:</strong> لا يتم إرسال أي بيانات لشركات أخرى</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-purple-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>شبكة داخلية:</strong> يمكن تشغيل النظام بدون اتصال بالإنترنت (Offline Mode)</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-purple-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>امتثال كامل:</strong> متوافق مع قوانين حماية البيانات الفلسطينية</span>
+                            </li>
+                        </ul>
+                    </motion.div>
+                </GlowCard>
 
-                <motion.div
-                    initial={{ y: 50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.6 }}
-                    className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl border-2 border-orange-300"
-                >
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center">
-                            <Key className="text-white" size={24} />
+                <GlowCard>
+                    <motion.div
+                        initial={{ y: 50, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.6 }}
+                        className="bg-gradient-to-br from-orange-50 to-orange-100 p-4 md:p-6 rounded-xl border-2 border-orange-300"
+                    >
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-orange-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <Key className="text-white" size={20} />
+                            </div>
+                            <h3 className="text-lg md:text-xl font-bold text-orange-900">صلاحيات محكمة</h3>
                         </div>
-                        <h3 className="text-xl font-bold text-orange-900">صلاحيات محكمة</h3>
-                    </div>
-                    <ul className="space-y-3 text-slate-700">
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-orange-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>تحكم بالوصول:</strong> كل موظف له صلاحيات محددة حسب دوره</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-orange-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>سجل كامل:</strong> تتبع جميع العمليات (من، متى، ماذا)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={20} className="text-orange-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm"><strong>مصادقة قوية:</strong> تسجيل دخول متعدد العوامل (2FA)</span>
-                        </li>
-                    </ul>
-                </motion.div>
+                        <ul className="space-y-2 md:space-y-3 text-slate-700">
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-orange-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>تحكم بالوصول:</strong> كل موظف له صلاحيات محددة حسب دوره</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-orange-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>سجل كامل:</strong> تتبع جميع العمليات (من، متى، ماذا)</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                                <CheckCircle size={18} className="text-orange-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>مصادقة قوية:</strong> تسجيل دخول متعدد العوامل (2FA)</span>
+                            </li>
+                        </ul>
+                    </motion.div>
+                </GlowCard>
             </div>
 
             <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.8 }}
-                className="mt-8 bg-slate-800 text-white p-6 rounded-2xl text-center"
+                className="mt-6 md:mt-8 bg-gradient-to-r from-slate-800 to-slate-900 text-white p-4 md:p-6 rounded-2xl text-center shadow-2xl"
             >
-                <h3 className="text-2xl font-bold mb-3">🔒 الخلاصة: سيادة رقمية كاملة</h3>
-                <p className="text-slate-300 text-lg">
+                <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3">🔒 الخلاصة: سيادة رقمية كاملة</h3>
+                <p className="text-slate-300 text-sm md:text-lg px-2">
                     نحن لا نبيع "اشتراكاً"، بل نبني لكم نظاماً <strong className="text-emerald-400">تملكونه بالكامل</strong>، 
                     ويعمل على بنيتكم التحتية الخاصة، بدون أي تبعية خارجية.
                 </p>

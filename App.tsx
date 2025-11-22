@@ -75,25 +75,30 @@ const App: React.FC = () => {
   const CurrentComponent = slides[currentSlide].component;
 
   return (
-    <div className="h-screen w-screen bg-slate-50 text-slate-800 overflow-hidden flex flex-col relative selection:bg-emerald-200">
+    <div className="h-screen w-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 text-slate-800 overflow-hidden flex flex-col relative selection:bg-emerald-200">
       {/* Top Bar */}
-      <header className="h-14 border-b border-slate-200 bg-white flex items-center justify-between px-6 z-20 shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold">Z7</div>
-          <span className="font-bold text-lg text-slate-700">Z7 pro</span>
-          <span className="w-px h-4 bg-slate-300 mx-2"></span>
-          <span className="text-sm text-slate-500 hidden sm:block">بلدية النويعمة والديوك الفوقا</span>
+      <header className="h-12 sm:h-14 border-b border-slate-200 bg-white/80 backdrop-blur-lg flex items-center justify-between px-3 sm:px-6 z-20 shadow-sm">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <motion.div 
+            className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-emerald-600 to-emerald-500 rounded-lg flex items-center justify-center text-white font-bold shadow-lg"
+            whileHover={{ scale: 1.1, rotate: 5 }}
+          >
+            Z7
+          </motion.div>
+          <span className="font-bold text-base sm:text-lg text-slate-700">Z7 pro</span>
+          <span className="w-px h-3 sm:h-4 bg-slate-300 mx-1 sm:mx-2"></span>
+          <span className="text-xs sm:text-sm text-slate-500 hidden sm:block">بلدية النويعمة والديوك الفوقا</span>
         </div>
         
-        <div className="flex items-center gap-4">
-           <span className="text-sm font-medium text-slate-400">
+        <div className="flex items-center gap-2 sm:gap-4">
+           <span className="text-xs sm:text-sm font-medium text-slate-400">
             {currentSlide + 1} / {slides.length}
           </span>
           <button 
             onClick={() => setIsMenuOpen(true)}
-            className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+            className="p-1.5 sm:p-2 hover:bg-slate-100 rounded-full transition-colors"
           >
-            <Menu size={20} />
+            <Menu size={18} className="sm:w-5 sm:h-5" />
           </button>
         </div>
       </header>
@@ -119,22 +124,22 @@ const App: React.FC = () => {
       </main>
 
       {/* Bottom Navigation */}
-      <div className="h-16 bg-white border-t border-slate-200 flex items-center justify-between px-6 sm:px-12 z-20">
+      <div className="h-14 sm:h-16 bg-white/90 backdrop-blur-lg border-t border-slate-200 flex items-center justify-between px-3 sm:px-6 md:px-12 z-20">
         <button 
           onClick={prevSlide}
           disabled={currentSlide === 0}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${currentSlide === 0 ? 'text-slate-300' : 'text-slate-700 hover:bg-slate-100 hover:text-emerald-600'}`}
+          className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-all text-sm sm:text-base ${currentSlide === 0 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-700 hover:bg-slate-100 hover:text-emerald-600 hover:scale-105'}`}
         >
-          <ChevronRight size={20} />
-          <span className="font-medium">السابق</span>
+          <ChevronRight size={18} className="sm:w-5 sm:h-5" />
+          <span className="font-medium hidden sm:inline">السابق</span>
         </button>
 
-        <div className="flex gap-1 overflow-x-auto max-w-[50%] px-2 hide-scrollbar">
+        <div className="flex gap-1 overflow-x-auto max-w-[40%] sm:max-w-[50%] px-1 sm:px-2 hide-scrollbar">
             {slides.map((_, idx) => (
                 <div 
                     key={idx}
                     onClick={() => setCurrentSlide(idx)}
-                    className={`h-1.5 min-w-[0.5rem] rounded-full transition-all cursor-pointer ${currentSlide === idx ? 'w-8 bg-emerald-600' : 'w-2 bg-slate-200 hover:bg-emerald-200'}`}
+                    className={`h-1 sm:h-1.5 min-w-[0.4rem] sm:min-w-[0.5rem] rounded-full transition-all cursor-pointer ${currentSlide === idx ? 'w-6 sm:w-8 bg-emerald-600' : 'w-1.5 sm:w-2 bg-slate-200 hover:bg-emerald-200'}`}
                 />
             ))}
         </div>
@@ -142,10 +147,10 @@ const App: React.FC = () => {
         <button 
           onClick={nextSlide}
           disabled={currentSlide === slides.length - 1}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${currentSlide === slides.length - 1 ? 'text-slate-300' : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg'}`}
+          className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-all text-sm sm:text-base ${currentSlide === slides.length - 1 ? 'text-slate-300 cursor-not-allowed' : 'bg-gradient-to-r from-emerald-600 to-emerald-500 text-white hover:from-emerald-700 hover:to-emerald-600 shadow-md hover:shadow-lg hover:scale-105'}`}
         >
-          <span className="font-medium">التالي</span>
-          <ChevronLeft size={20} />
+          <span className="font-medium hidden sm:inline">التالي</span>
+          <ChevronLeft size={18} className="sm:w-5 sm:h-5" />
         </button>
       </div>
 
